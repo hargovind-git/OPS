@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Print Services</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Fast Print Services</h1>
+        <form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
+            <label for="customerName">Your Name:</label>
+            <input type="text" id="customerName" name="customerName" required>
+
+            <label for="customerMobile">Mobile Number:</label>
+            <input type="text" id="customerMobile" name="customerMobile" required>
+
+            <label for="printType">Print Type:</label>
+            <select id="printType" name="printType">
+                <option value="bw">Black & White</option>
+                <option value="color">Color</option>
+            </select>
+
+            <label for="fileUpload">Upload File:</label>
+            <input type="file" id="fileUpload" name="fileUpload" accept=".pdf,.docx,.jpg,.jpeg,.png" required>
+
+            <button type="submit" id="estimateBtn">Estimate Cost</button>
+        </form>
+
+        <div id="estimateResult"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
