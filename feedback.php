@@ -1,12 +1,3 @@
-<?php
-// Get query parameters
-$customerName = htmlspecialchars($_GET['name'] ?? '');
-$customerMobile = htmlspecialchars($_GET['mobile'] ?? '');
-$pageCount = htmlspecialchars($_GET['pages'] ?? '');
-$printType = htmlspecialchars($_GET['type'] ?? '');
-$estimatedCost = htmlspecialchars($_GET['cost'] ?? '');
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,9 +50,11 @@ $estimatedCost = htmlspecialchars($_GET['cost'] ?? '');
         <p>Your order has been received. Here's your order summary:</p>
         <p><strong>Name:</strong> <?php echo $customerName; ?></p>
         <p><strong>Mobile:</strong> <?php echo $customerMobile; ?></p>
-        <p><strong>Pages:</strong> <?php echo $pageCount; ?></p>
+        <p><strong>Pages:</strong> <?php echo $pageCount > 0 ? $pageCount : 'Invalid'; ?></p>
         <p><strong>Print Type:</strong> <?php echo ($printType === 'bw') ? 'Black & White' : 'Color'; ?></p>
-        <p><strong>Estimated Cost:</strong> <span class="highlight"><?php echo $estimatedCost; ?> INR</span></p>
+        <p><strong>Estimated Cost:</strong> <span class="highlight">
+            <?php echo $estimatedCost > 0 ? number_format($estimatedCost, 2) . ' INR' : 'Invalid'; ?>
+        </span></p>
         <p>You can return to the homepage whenever you're ready:</p>
         <button class="btn-home" onclick="window.location.href='index.html';">Go to Home</button>
     </div>
