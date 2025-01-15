@@ -3,6 +3,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileUpload'])) {
     $customerName = htmlspecialchars(trim($_POST['customerName']));
     $customerMobile = htmlspecialchars(trim($_POST['customerMobile']));
     $printType = htmlspecialchars(trim($_POST['printType']));
+    $delivery = htmlspecialchars(trim($_POST['delivery']));
     $fileTmpPath = $_FILES['fileUpload']['tmp_name'];
     $fileName = $_FILES['fileUpload']['name'];
     $fileType = $_FILES['fileUpload']['type'];
@@ -16,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileUpload'])) {
 
     if (in_array($fileType, $allowedTypes)) {
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+
+        // Generate a safe and unique file name
         $randomNumber = mt_rand(100000, 999999);
         $safeFileName = strtolower(preg_replace("/[^a-zA-Z0-9]/", "_", $customerName . '_' . $customerMobile));
         $newFileName = $safeFileName . '_' . $randomNumber . '.' . $fileExtension;
@@ -63,3 +66,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileUpload'])) {
     echo 'No file uploaded or form submission error.';
 }
 ?>
+

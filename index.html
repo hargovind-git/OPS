@@ -3,33 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fast Print Services</title>
+    <title>Fast Print Service - Upload & Estimate</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="container">
-        <h1>Welcome to Fast Print Services</h1>
-        <form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
-            <label for="customerName">Your Name:</label>
-            <input type="text" id="customerName" name="customerName" required>
+ <body>
+    <!--<div class="overlay"> -->
+        <div class="container">
+            <header>
+                <h1>Fast Print Service</h1>
+                <p>Upload your document, get a quick estimate, and place your order!</p>
+            </header>
 
-            <label for="customerMobile">Mobile Number:</label>
-            <input type="text" id="customerMobile" name="customerMobile" required>
+            <section class="upload-section">
+                <h2>Upload Your Document</h2>
+                <form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
+                    <!-- Name and Mobile Number Fields -->
+                    <div class="input-group">
+                        <label for="customerName">Your Name</label>
+                        <input type="text" id="customerName" name="customerName" placeholder="Enter your name" required>
+                    </div>
 
-            <label for="printType">Print Type:</label>
-            <select id="printType" name="printType">
-                <option value="bw">Black & White</option>
-                <option value="color">Color</option>
-            </select>
+                    <div class="input-group">
+                        <label for="customerMobile">Your Mobile Number</label>
+                        <input type="text" id="customerMobile" name="customerMobile" placeholder="Enter your mobile number" required>
+                    </div>
 
-            <label for="fileUpload">Upload File:</label>
-            <input type="file" id="fileUpload" name="fileUpload" accept=".pdf,.docx,.jpg,.jpeg,.png" required>
+                    <div class="input-group">
+                        <label for="fileUpload">Choose a File (PDF, Word, or Image)</label>
+                        <input type="file" id="fileUpload" name="fileUpload" accept=".pdf, .docx, .jpg, .jpeg, .png" required>
+                    </div>
 
-            <button type="submit" id="estimateBtn">Estimate Cost</button>
-        </form>
+                    <div class="input-group">
+                        <label for="printType">Print Type</label>
+                        <select id="printType" name="printType" required>
+                            <option value="bw">Black & White</option>
+                            <option value="color">Color</option>
+                        </select>
+                    </div>
 
-        <div id="estimateResult"></div>
+                    <div class="input-group">
+                        <label for="delivery">Delivery Option</label>
+                        <select id="delivery" name="delivery" required>
+                            <option value="delivery">Home Delivery</option>
+                            <option value="counter">Counter Collection</option>
+                        </select>
+                    </div>
+
+                    <button type="button" id="estimateBtn" class="btn">Get Price Estimate</button>
+                    <!-- Updated Feedback Section -->
+                    <div id="estimateResult"></div>
+
+                    <button type="submit" class="btn submit-btn">Submit Order</button>
+                     <input type="hidden" id="pageCount" name="pageCount">
+    <input type="hidden" id="estimatedCost" name="estimatedCost">
+    <button type="submit" class="btn submit-btn">Submit Order</button>
+                </form>
+            </section>
+<section class="admin-section">
+    <a href="shop_owner.php" class="btn admin-btn">Shop Owner</a>
+</section>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script src="scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
 </body>
 </html>
