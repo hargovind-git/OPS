@@ -8,7 +8,6 @@
         "estimatedCost": 30,
         "status": "done"
     },
-    
     {
         "customerName": "Manish kumar",
         "customerMobile": "9911541810",
@@ -89,5 +88,14 @@
         "printType": "bw",
         "estimatedCost": 30,
         "status": "done"
+    },
+    {
+        "customerName": "govind",
+        "customerMobile": "9315770056",
+        "documentName": "govind_9315770056_256532.pdf",
+        "pages": 10,
+        "printType": "color",
+        "estimatedCost": 50,
+        "status": "pending"
     }
 ]

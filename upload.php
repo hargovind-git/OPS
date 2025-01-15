@@ -1,69 +1,130 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileUpload'])) {
-    $customerName = htmlspecialchars(trim($_POST['customerName']));
-    $customerMobile = htmlspecialchars(trim($_POST['customerMobile']));
-    $printType = htmlspecialchars(trim($_POST['printType']));
-    $delivery = htmlspecialchars(trim($_POST['delivery']));
-    $fileTmpPath = $_FILES['fileUpload']['tmp_name'];
-    $fileName = $_FILES['fileUpload']['name'];
-    $fileType = $_FILES['fileUpload']['type'];
-    $uploadDir = 'uploads/';
+// Include necessary libraries for PDF page count (FPDI)
+require_once('fpdf.php');
+require_once('fpdi.php');
 
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
+// Initialize variables for error handling
+$error = '';
+$success = '';
+$uploadDir = 'uploads/';
 
-    $allowedTypes = ['application/pdf', 'application/msword', 'image/jpeg', 'image/png', 'image/jpg'];
- 
-    if (in_array($fileType, $allowedTypes)) {
-        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get form data
+    $customerName = htmlspecialchars($_POST['name']);
+    $customerMobile = htmlspecialchars($_POST['mobile']);
+    $printType = htmlspecialchars($_POST['type']); // 'bw' or 'color'
 
-        // Generate a safe and unique file name
-        $randomNumber = mt_rand(100000, 999999);
-        $safeFileName = strtolower(preg_replace("/[^a-zA-Z0-9]/", "_", $customerName . '_' . $customerMobile));
-        $newFileName = $safeFileName . '_' . $randomNumber . '.' . $fileExtension;
+    // Handle file upload
+    if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['file']['tmp_name'];
+        $fileName = $_FILES['file']['name'];
+        $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        $allowedExtensions = ['pdf', 'jpg', 'jpeg', 'png']; // Allowed file types
 
-        $uploadFile = $uploadDir . $newFileName;
+        // Validate file type
+        if (in_array($fileExtension, $allowedExtensions)) {
+            // Move file to upload directory
+            $destinationPath = $uploadDir . $fileName;
+            if (move_uploaded_file($fileTmpPath, $destinationPath)) {
+                // Calculate page count for PDF or treat image as 1 page
+                if ($fileExtension === 'pdf') {
+                    $pdf = new FPDI();
+                    $pageCount = $pdf->setSourceFile($destinationPath); // Get actual page count
+                } else {
+                    $pageCount = 1; // Non-PDF files are treated as single-page prints
+                }
 
-        if (move_uploaded_file($fileTmpPath, $uploadFile)) {
-            // Estimate Calculation
-            $pageCount = 10; // Placeholder for page count logic
-            $costPerPage = ($printType === 'bw') ? 3 : 5;
-            $estimatedCost = $pageCount * $costPerPage;
+                // Calculate cost based on print type
+                $costPerPage = ($printType === 'bw') ? 3 : 5; // 3 INR for B/W, 5 INR for Color
+                $estimatedCost = $pageCount * $costPerPage;
 
-            // Save Order Data to JSON
-            $orderData = [
-                'customerName' => $customerName,
-                'customerMobile' => $customerMobile,
-                'documentName' => $newFileName,
-                'pages' => $pageCount,
-                'printType' => $printType,
-                'estimatedCost' => $estimatedCost,
-                'status' => 'pending'
-            ];
-
-            $jsonFilePath = 'orders.json';
-
-            // Read existing JSON file
-            $existingData = file_exists($jsonFilePath) ? json_decode(file_get_contents($jsonFilePath), true) : [];
-
-            // Append new order
-            $existingData[] = $orderData;
-
-            // Save updated data back to JSON
-            file_put_contents($jsonFilePath, json_encode($existingData, JSON_PRETTY_PRINT));
-
-            // Redirect to feedback
-            header("Location: feedback.php?name=" . urlencode($customerName) . "&mobile=" . urlencode($customerMobile) . "&pages=$pageCount&type=$printType&cost=$estimatedCost");
-            exit;
+                // Redirect to feedback page with details
+                header("Location: feedback.php?name=$customerName&mobile=$customerMobile&pages=$pageCount&type=$printType&cost=$estimatedCost");
+                exit;
+            } else {
+                $error = 'Error moving the file to the upload directory.';
+            }
         } else {
-            echo 'There was an error uploading the file.';
+            $error = 'Unsupported file type. Only PDF, JPG, JPEG, and PNG are allowed.';
         }
     } else {
-        echo 'Invalid file type. Please upload a PDF, Word, or image file.';
+        $error = 'Please upload a file.';
     }
-} else {
-    echo 'No file uploaded or form submission error.';
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #2193b0, #6dd5ed);
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+        }
+        .form-box {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 10px;
+            padding: 30px;
+            display: inline-block;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .form-box h1 {
+            color: #2193b0;
+        }
+        .form-box input, .form-box select, .form-box button {
+            width: 90%;
+            margin: 10px auto;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-box button {
+            background-color: #2193b0;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .form-box button:hover {
+            background-color: #6dd5ed;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h1>Upload Your Document</h1>
+        <form action="upload.php" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Enter Your Name" required>
+            <input type="text" name="mobile" placeholder="Enter Your Mobile Number" required>
+            <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
+            <select name="type" required>
+                <option value="bw">Black & White</option>
+                <option value="color">Color</option>
+            </select>
+            <button type="submit">Upload</button>
+        </form>
+        <?php if ($error): ?>
+            <p class="error"><?php echo $error; ?></p>
+        <?php endif; ?>
+        <?php if ($success): ?>
+            <p class="success"><?php echo $success; ?></p>
+        <?php endif; ?>
+    </div>
+</body>
+</html>
