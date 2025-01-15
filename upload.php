@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileUpload'])) {
     }
 
     $allowedTypes = ['application/pdf', 'application/msword', 'image/jpeg', 'image/png', 'image/jpg'];
-
+ 
     if (in_array($fileType, $allowedTypes)) {
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
 

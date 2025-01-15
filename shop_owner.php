@@ -14,7 +14,7 @@ if (!isset($_SESSION['logged_in'])) {
         }
     }
 
-    // Show styled login form
+    // Show styled login form 
     echo '<!DOCTYPE html>
           <html lang="en">
           <head>

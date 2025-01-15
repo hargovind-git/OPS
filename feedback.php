@@ -6,6 +6,7 @@ $pageCount = htmlspecialchars($_GET['pages'] ?? '');
 $printType = htmlspecialchars($_GET['type'] ?? '');
 $estimatedCost = htmlspecialchars($_GET['cost'] ?? '');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

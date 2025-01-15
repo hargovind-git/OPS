@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const customerName = document.getElementById('customerName').value;
         const customerMobile = document.getElementById('customerMobile').value;
 
+        
         // Validation: Ensure all inputs are filled
         if (!fileUpload) {
             alert("Please upload a file!");
