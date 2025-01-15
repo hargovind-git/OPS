@@ -1,35 +1,71 @@
 [
     {
-        "customerName": "govind",
-        "customerMobile": "9315770056",
-        "documentName": "govind_9315770056.pdf",
+        "customerName": "test",
+        "customerMobile": "9988776655",
+        "documentName": "test_9988776655.pdf",
         "pages": 10,
-        "printType": "color",
-        "estimatedCost": 50,
-        "status": "pending"
+        "printType": "bw",
+        "estimatedCost": 30,
+        "status": "done"
     },
     {
-        "customerName": "randtest",
-        "customerMobile": "9765432184",
-        "documentName": "randtest_9765432184_254094.pdf",
+        "customerName": "Manish kumar",
+        "customerMobile": "9911541810",
+        "documentName": "manish_kumar_9911541810_206606.pdf",
         "pages": 10,
-        "printType": "color",
-        "estimatedCost": 50,
-        "status": "pending"
+        "printType": "bw",
+        "estimatedCost": 30,
+        "status": "done"
     },
     {
-        "customerName": "randtest",
-        "customerMobile": "9315770056",
-        "documentName": "randtest_9315770056_162485.pdf",
+        "customerName": "Gv",
+        "customerMobile": "9876543211",
+        "documentName": "gv_9876543211_959816.jpg",
         "pages": 10,
         "printType": "bw",
         "estimatedCost": 30,
         "status": "pending"
     },
     {
-        "customerName": "randtest",
-        "customerMobile": "9315770056",
-        "documentName": "randtest_9315770056_753653.pdf",
+        "customerName": "Golu",
+        "customerMobile": "9580061687",
+        "documentName": "golu_9580061687_709263.jpg",
+        "pages": 10,
+        "printType": "bw",
+        "estimatedCost": 30,
+        "status": "pending"
+    },
+    {
+        "customerName": "Pratibha",
+        "customerMobile": "8368591671",
+        "documentName": "pratibha_8368591671_146606.pdf",
+        "pages": 10,
+        "printType": "color",
+        "estimatedCost": 50,
+        "status": "pending"
+    },
+    {
+        "customerName": "bablu",
+        "customerMobile": "9876543211",
+        "documentName": "bablu_9876543211_975210.jpg",
+        "pages": 10,
+        "printType": "color",
+        "estimatedCost": 50,
+        "status": "done"
+    },
+    {
+        "customerName": "Sahil bhati",
+        "customerMobile": "9643035977",
+        "documentName": "sahil_bhati_9643035977_256452.pdf",
+        "pages": 10,
+        "printType": "bw",
+        "estimatedCost": 30,
+        "status": "pending"
+    },
+    {
+        "customerName": "mayank",
+        "customerMobile": "7060225587",
+        "documentName": "mayank_7060225587_149901.pdf",
         "pages": 10,
         "printType": "bw",
         "estimatedCost": 30,
@@ -38,7 +74,7 @@
     {
         "customerName": "govind",
         "customerMobile": "9315770056",
-        "documentName": "govind_9315770056_215480.pdf",
+        "documentName": "govind_9315770056_118003.pdf",
         "pages": 10,
         "printType": "bw",
         "estimatedCost": 30,
@@ -47,28 +83,10 @@
     {
         "customerName": "test1",
         "customerMobile": "9315770056",
-        "documentName": "test1_9315770056_479509.pdf",
+        "documentName": "test1_9315770056_205663.pdf",
         "pages": 10,
         "printType": "bw",
         "estimatedCost": 30,
-        "status": "pending"
-    },
-    {
-        "customerName": "govind",
-        "customerMobile": "9315770056",
-        "documentName": "govind_9315770056_332518.pdf",
-        "pages": 10,
-        "printType": "color",
-        "estimatedCost": 50,
-        "status": "pending"
-    },
-    {
-        "customerName": "govind",
-        "customerMobile": "9315770056",
-        "documentName": "govind_9315770056_118328.pdf",
-        "pages": 10,
-        "printType": "color",
-        "estimatedCost": 50,
-        "status": "pending"
+        "status": "done"
     }
 ]
