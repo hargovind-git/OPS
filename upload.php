@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['fileUpload'])) {
 
         if (move_uploaded_file($fileTmpPath, $uploadFile)) {
             // Estimate Calculation
-            $pageCount = 10; // Placeholder for page count logic
+            $pageCount= 10 ; // Placeholder for page count logic
             $costPerPage = ($printType === 'bw') ? 3 : 5;
             $estimatedCost = $pageCount * $costPerPage;
 

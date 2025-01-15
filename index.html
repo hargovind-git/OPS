@@ -40,6 +40,7 @@
                             <option value="bw">Black & White</option>
                             <option value="color">Color</option>
                         </select>
+                        
                     </div>
 
                     <div class="input-group">
@@ -62,6 +63,81 @@
 </section>
         </div>
     </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const estimateBtn = document.getElementById('estimateBtn');
+        const submitForm = document.getElementById('printForm');
+
+        estimateBtn.addEventListener('click', async function () {
+            const fileUpload = document.getElementById('fileUpload').files[0];
+            const printType = document.getElementById('printType').value;
+
+            // Validation
+            if (!fileUpload) {
+                alert("Please upload a file!");
+                return;
+            }
+
+            // File type validation
+            const validTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "image/jpeg", "image/png"];
+            if (!validTypes.includes(fileUpload.type)) {
+                alert("Unsupported file type. Please upload a PDF, Word, or image file.");
+                return;
+            }
+
+            // Determine page count
+            let pageCount = 0;
+
+            if (fileUpload.type === "application/pdf") {
+                pageCount = await getPdfPageCount(fileUpload);
+            } else if (fileUpload.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+                pageCount = 10; // Placeholder for DOCX files
+            } else if (fileUpload.type.startsWith("image/")) {
+                pageCount = 1;
+            }
+
+            if (pageCount === 0) {
+                alert("Failed to determine page count. Please try again.");
+                return;
+            }
+
+            // Calculate estimated cost
+            const costPerPage = (printType === 'bw') ? 3 : 5;
+            const estimatedCost = pageCount * costPerPage;
+
+            // Update hidden fields
+            document.getElementById('pageCount').value = pageCount;
+            document.getElementById('estimatedCost').value = estimatedCost;
+
+            // Display estimation
+            const resultDiv = document.getElementById('estimateResult');
+            resultDiv.innerHTML = `
+                <p><strong>Number of Pages:</strong> ${pageCount}</p>
+                <p><strong>Print Type:</strong> ${printType === 'bw' ? 'Black & White' : 'Color'}</p>
+                <p><strong>Estimated Price:</strong> <span>${estimatedCost} INR</span></p>
+            `;
+        });
+
+        async function getPdfPageCount(pdfFile) {
+            const fileReader = new FileReader();
+            return new Promise((resolve, reject) => {
+                fileReader.onload = async function () {
+                    const pdfData = new Uint8Array(fileReader.result);
+                    try {
+                        const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+                        resolve(pdf.numPages);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                fileReader.onerror = function () {
+                    reject(fileReader.error);
+                };
+                fileReader.readAsArrayBuffer(pdfFile);
+            });
+        }
+    });
+</script>
 
     <script src="scripts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
