@@ -4,4 +4,3 @@ session_destroy();
 header("Location: shop_owner.php");
 exit;
 ?>
-

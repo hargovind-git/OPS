@@ -14,7 +14,7 @@ body {
     align-items: center;
     background: linear-gradient(to right, #ff7e5f, #feb47b); /* Warm gradient */
     margin: 0; /* Ensure no extra margin around the body */
-} 
+}
 
 /* Centering Content with Proper Margins */
 .overlay {

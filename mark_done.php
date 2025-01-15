@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             break;
         }
     }
-    
 
     // Save the updated data back to the file
     file_put_contents('uploads/data.json', json_encode($data, JSON_PRETTY_PRINT));
